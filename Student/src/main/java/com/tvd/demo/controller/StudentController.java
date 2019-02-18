@@ -126,8 +126,28 @@ public class StudentController {
 		
 		List<StudentDTO> students=service.getAllStudents();
 		
-	
+		String filename="../report/sample.xlsx";
+		
 		PrintWriter out=resp.getWriter();
+		out.write("<Table>");
+		out.write("<tr>");
+		out.write("<th>SLNO</th>");
+		out.write("<th>NAME</th>");
+		out.write("<th>PLACE</th>");
+		out.write("<th>EMAIL</th>");
+		out.write("</tr>");
+		for (StudentDTO studentDTO : students) {
+			
+			out.write("<tr>");
+			out.write("<td>"+studentDTO.getId()+"</td>");
+			out.write("<td>"+studentDTO.getName()+"</td>");
+			out.write("<td>"+studentDTO.getPlace()+"</td>");
+			out.write("<td>"+studentDTO.getEmail()+"</td>");
+			out.write("</tr>");
+		}
+		out.write("</Table>");
+		resp.setHeader("Content-Disposition","attachment;filename=\""+filename+"\"");
+ 		out.close();
 		
 		
 	}
