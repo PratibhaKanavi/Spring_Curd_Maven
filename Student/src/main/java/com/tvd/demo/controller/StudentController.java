@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -69,49 +70,49 @@ public class StudentController {
 	@RequestMapping("/excelrep")
 	public void excelReport(HttpServletResponse resp) throws FileNotFoundException, IOException {
 		
-		int row=3;
+		/* System.out.println("inside the excel report..."); */
+		
+		int row=2;
 		int cell=0;
 		
 		Row row1;
 		List<StudentDTO> students=service.getAllStudents();
-		for (StudentDTO studentDTO : students) {
-			System.out.println("name--->"+studentDTO.getName());
-		}
-		
-		XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(excel.getPath("StudentReport.xlsx")));
-		XSSFSheet worksheet=workbook.getSheet("STUDENT_DETAILS");
-		
 		/*
-		 * Row r = worksheet.getRow( row-1); // 10-1
-		 * 
-		 * Cell c = r.getCell(1); // 4-1
-		 */		
-		CellStyle cellStyle = worksheet.getWorkbook().createCellStyle();
-		excel.cellStyle(cellStyle);
-		CellStyle cellStyle2 = worksheet.getWorkbook().createCellStyle();
-		excel.cellStyle2(cellStyle2);
+		 * for (StudentDTO studentDTO : students) {
+		 * System.out.println("name--->"+studentDTO.getName()); }
+		 */
+		XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(excel.getPath("StudentReport.xlsx")));
 		
-		for (StudentDTO s : students) {
-			row1 = worksheet.createRow((int) row);
-			
-			Cell cell001 = row1.createCell(0);
-			cell001.setCellValue(s.getId());
-			cell001.setCellStyle(cellStyle);
-			
-			Cell cell002 = row1.createCell(1);
-			cell002.setCellValue(s.getName());
-			cell002.setCellStyle(cellStyle);
-			
-			Cell cell003 = row1.createCell(2);
-			cell003.setCellValue(s.getPlace());
-			cell003.setCellStyle(cellStyle);
-			
-			Cell cell004 = row1.createCell(3);
-			cell004.setCellValue(s.getEmail());
-			cell004.setCellStyle(cellStyle);
-			
-			row++;
-		}
+		XSSFSheet worksheet=workbook.getSheet("AAAAAA");
+	
+		
+		  CellStyle cellStyle = worksheet.getWorkbook().createCellStyle();
+		  excel.cellStyle(cellStyle); 
+		  CellStyle cellStyle2 =worksheet.getWorkbook().createCellStyle(); 
+		  excel.cellStyle2(cellStyle2);
+		  
+		  for (StudentDTO s : students) { 
+		 row1 = worksheet.createRow((int) row);
+		  
+		  Cell cell001 = row1.createCell(0); 
+		  cell001.setCellValue(s.getId());
+		  cell001.setCellStyle(cellStyle);
+		  
+		  Cell cell002 = row1.createCell(1); 
+		  cell002.setCellValue(s.getName());
+		  cell002.setCellStyle(cellStyle);
+		  
+		  Cell cell003 = row1.createCell(2); 
+		  cell003.setCellValue(s.getPlace());
+		  cell003.setCellStyle(cellStyle);
+		  
+		  Cell cell004 = row1.createCell(3); 
+		  cell004.setCellValue(s.getEmail());
+		  cell004.setCellStyle(cellStyle);
+		  
+		  row++; }
+		 
+		 
 		
 		
 		
@@ -119,5 +120,17 @@ public class StudentController {
 		
 		
 	}
+	
+	@RequestMapping("responseExcel")
+	public void responseexcel(HttpServletResponse resp) throws IOException {
+		
+		List<StudentDTO> students=service.getAllStudents();
+		
+	
+		PrintWriter out=resp.getWriter();
+		
+		
+	}
+	
 	
 }
